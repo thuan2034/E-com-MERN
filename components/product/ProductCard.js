@@ -5,13 +5,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 export default function ({ product }) {
   return (
-    <div key={product?._id} className="card my-4 col-lg-4">
-      <div style={{ height: "200px", overflow: "hidden" }}>
+    <div key={product?._id} className="card my-3 shadow col-md-3 mx-2 ">
+      <div className="card-header">
         <Image
           src={product?.images?.[0]?.secure_url || "/images/default.jpeg"}
           width={500}
-          height={300}
-          style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          height={500}
+          style={{ objectFit: "fill", width: "100%", height: "100%" }}
           alt={product?.title}
         />
       </div>
@@ -34,7 +34,7 @@ export default function ({ product }) {
         <small>Tags: {product?.tags?.map((t) => t?.name).join(" ")}</small>
       </div>
       <div className="card-footer d-flex justify-content-between">
-        <small>❤ Likes</small>
+        <small>❤️ Likes</small>
         <small>Posted {dayjs(product?.createdAt).fromNow()}</small>
       </div>
       <div className="card-footer d-flex justify-content-between">

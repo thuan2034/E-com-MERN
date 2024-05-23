@@ -16,6 +16,7 @@ export default function AdminCreateCategory() {
       <p>Create Category</p>
       <input
         type="text"
+        autofocus="autofocus"
         value={updatingCategory ? updatingCategory.name : name}
         onChange={(e) =>
           updatingCategory
@@ -33,6 +34,7 @@ export default function AdminCreateCategory() {
           onClick={(e) => {
             e.preventDefault();
             updatingCategory ? updateCategory() : createCategory();
+            // window.location.reload();
           }}
         >
           {updatingCategory ? "Update" : "Create"}

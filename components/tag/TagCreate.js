@@ -19,6 +19,7 @@ export default function TagCreate() {
   useEffect(() => {
     fetchCategories();
   }, []);
+  console.log(categories);
   return (
     <>
       <p>Create tag</p>
@@ -61,7 +62,10 @@ export default function TagCreate() {
               <option
                 key={c._id}
                 value={c._id}
-                selected={c._id === updatingTag?.parentCategory|| c._id === parentCategory}
+                selected={
+                  c._id === updatingTag?.parentCategory ||
+                  c._id === parentCategory
+                }
               >
                 {c.name}
               </option>

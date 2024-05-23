@@ -7,9 +7,8 @@ const tagSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
       min: 2,
-      max: 32,
+      max: 50,
     },
     slug: {
       type: String,

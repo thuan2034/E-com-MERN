@@ -27,19 +27,19 @@ export default function ProductList() {
   };
   return (
     <div className="container my-5">
-      <div className="row gx-3">
+      <div className="row justify-content-center my-4">
         {/* 
 <pre>{JSON.stringify(products, null, 4)}</pre> */}
         {products?.map((product) => (
-          <div key={product?._id} className="col-lg-6 my-3">
-            <div style={{ height: "200px", overflow: "hidden" }}>
+          <div key={product?._id} className="card my-3 shadow col-md-3 mx-2">
+            <div className="card-header">
               <Image
                 src={product?.images[0]?.secure_url || "/images/default.jpeg"}
                 alt={product?.title}
                 width={500}
                 height={300}
                 style={{
-                  objectFit: "cover",
+                  objectFit: "fill",
                   height: "100%",
                   width: "100%",
                 }}

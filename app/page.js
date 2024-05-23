@@ -22,7 +22,7 @@ export default async function Home({ searchParams }) {
       <h1 className="text-center">
         <strong>Latest Products</strong>
       </h1>
-      <div className="row">
+      <div className="row justify-content-center my-5">
         {products?.map((product) => (
           <ProductCard key={product?._id} product={product}></ProductCard>
         ))}

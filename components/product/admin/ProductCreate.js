@@ -63,7 +63,7 @@ export default function ProductCreate() {
         type="number"
         placeholder="Price"
         min="1"
-        class="form-control p-2 mb-2"
+        className="form-control p-2 mb-2"
         value={updatingProduct ? updatingProduct?.price : product?.price}
         onChange={(e) =>
           updatingProduct
@@ -100,7 +100,7 @@ export default function ProductCreate() {
         type="number"
         placeholder="Stock"
         min="1"
-        class="form-control p-2 mb-2"
+        className="form-control p-2 mb-2"
         value={updatingProduct ? updatingProduct?.stock : product?.stock}
         onChange={(e) =>
           updatingProduct
