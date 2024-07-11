@@ -102,6 +102,22 @@ export const CategoryProvider = ({ children }) => {
       toast.error("An error occurred while deleting the category");
     }
   };
+
+  const fetchCategoriesPublic = async () => {
+    try {
+      // '/category' not '/categories'
+      const response = await fetch(`${process.env.API}/categories`);
+
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(data.err);
+      } else {
+        setCategories(data);
+      }
+    } catch (err) {
+      toast.error("An error occurred while fetching categories");
+    }
+  };
   return (
     <CategoryContext.Provider
       value={{
@@ -111,6 +127,7 @@ export const CategoryProvider = ({ children }) => {
         categories,
         setCategories,
         fetchCategories,
+        fetchCategoriesPublic,
         updatingCategory,
         setUpdatingCategory,
         updateCategory,

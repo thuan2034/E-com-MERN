@@ -13,7 +13,42 @@ export const ProductProvider = ({ children }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [updatingProduct, setUpdatingProduct] = useState(null);
   const [uploading, setUploading] = useState(false);
+  //image preview modal
+  const [showImagePreviewModal, setShowImagePreviewModal] = useState(false);
+  const [currentImagePreviewUrl, setCurrentImagePreviewUrl] = useState("");
+
+  //Rating system
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [currentRating, setCurrentRating] = useState(0);
+  const [comment, setComment] = useState("");
+  //brands
+  const [brands, setBrands] = useState([]);
+  //text based search
+  const [productSearchQuery, setProductSearchQuery] = useState("");
+  const [productSearchResults, setProductSearchResults] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    // close modal on clicks on the page
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+    function handleClickOutside(event) {
+      if (event.target.classList.contains("modal")) {
+        closeModal();
+      }
+    }
+  }, []);
+  const openImagePreviewModal = (url) => {
+    setCurrentImagePreviewUrl(url);
+    setShowImagePreviewModal(true);
+  };
+  const closeModal = () => {
+    setShowImagePreviewModal(false);
+    setCurrentImagePreviewUrl("");
+    setShowRatingModal(false);
+  };
   const uploadImages = (e) => {
     const files = e.target.files;
     let allUploadedFiles = updatingProduct
@@ -149,6 +184,22 @@ export const ProductProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const fetchBrands = async (page = 1) => {
+    try {
+      const response = await fetch(`${process.env.API}/product/brands`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        toast.error(data?.err);
+      } else {
+        setBrands(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const updateProduct = async () => {
     try {
       const response = await fetch(
@@ -190,6 +241,26 @@ export const ProductProvider = ({ children }) => {
       console.log(err);
     }
   };
+
+  const fetchProductSearchResults = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `${process.env.API}/search/products?productSearchQuery=${productSearchQuery}`,
+        {
+          method: "GET",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setProductSearchResults(data);
+      router.push(`/search/products?productSearchQuery=${productSearchQuery}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <ProductContext.Provider
       value={{
@@ -211,6 +282,25 @@ export const ProductProvider = ({ children }) => {
         fetchProducts,
         updateProduct,
         deleteProduct,
+        closeModal,
+        openImagePreviewModal,
+        showImagePreviewModal,
+        setShowImagePreviewModal,
+        currentImagePreviewUrl,
+        setCurrentImagePreviewUrl,
+        showRatingModal,
+        setShowRatingModal,
+        currentRating,
+        setCurrentRating,
+        comment,
+        setComment,
+        fetchBrands,
+        brands,
+        productSearchQuery,
+        setProductSearchQuery,
+        productSearchResults,
+        setProductSearchResults,
+        fetchProductSearchResults,
       }}
     >
       {children}

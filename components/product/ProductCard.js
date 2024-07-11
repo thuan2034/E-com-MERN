@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ProductRating from "@/components/product/ProductRating";
 dayjs.extend(relativeTime);
 export default function ({ product }) {
   return (
@@ -10,13 +11,15 @@ export default function ({ product }) {
         <Image
           src={product?.images?.[0]?.secure_url || "/images/default.jpeg"}
           width={500}
-          height={500}
+          height={300}
           style={{ objectFit: "fill", width: "100%", height: "100%" }}
           alt={product?.title}
         />
       </div>
       <div className="card-body">
-        <h5 className="card-title">{product?.title}</h5>
+        <Link href={`/product/${product?.slug}`}>
+          <h5 className="card-title">{product?.title}</h5>
+        </Link>
         <div
           dangerouslySetInnerHTML={{
             __html:
@@ -37,9 +40,9 @@ export default function ({ product }) {
         <small>❤️ Likes</small>
         <small>Posted {dayjs(product?.createdAt).fromNow()}</small>
       </div>
-      <div className="card-footer d-flex justify-content-between">
+      <div className="card-footer d-flex justify-content-between align-items-center">
         <small>Brand: {product?.brand}</small>
-        <small>🌟 Stars</small>
+        <ProductRating product={product} leaveARating={false} />
       </div>
     </div>
   );
