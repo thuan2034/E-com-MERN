@@ -3,7 +3,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import ProductImage from "@/components/product/ProductImage";
 import ProductLike from "@/components/product/ProductLike";
 import ProductRating from "@/components/product/ProductRating";
+import UserReviews from "@/components/product/UserReviews";
 import Stars from "@/components/product/Stars";
+
 import { calculateAverageRating } from "@/utils/helpers";
 // import ProductImage from "@/components/product/ProductImage";
 dayjs.extend(relativeTime);
@@ -60,11 +62,17 @@ export default async function ProductViewPage({ params }) {
             <div className="card-footer d-flex justify-content-between">
               <small>Brand: {product.brand}</small>
             </div>
-            <ProductRating product={product}/>
+            <ProductRating product={product} />
           </div>
         </div>
         <div className="col-lg-4">Add to cart / wishlist</div>
+        
       </div>
+      <div className="row">
+          <div className="col my-5">
+            <UserReviews reviews={product?.ratings} />
+          </div>
+        </div>
       <div className="row">
         <div className="col my-5">
           <p className="lead">Related products</p>
