@@ -9,6 +9,16 @@ import Stars from "@/components/product/Stars";
 import { calculateAverageRating } from "@/utils/helpers";
 // import ProductImage from "@/components/product/ProductImage";
 dayjs.extend(relativeTime);
+export async function generateMetadata({ params }) {
+  const product = await getProducts(params.slug);
+  return {
+    title: product?.title,
+    description: product?.description?.substr(0, 160),
+    openGraph: {
+      images: product?.images[0]?.secure_url,
+    }
+  };
+}
 async function getProducts(slug) {
   try {
     const response = await fetch(`${process.env.API}/product/${slug}`, {
@@ -66,13 +76,12 @@ export default async function ProductViewPage({ params }) {
           </div>
         </div>
         <div className="col-lg-4">Add to cart / wishlist</div>
-        
       </div>
       <div className="row">
-          <div className="col my-5">
-            <UserReviews reviews={product?.ratings} />
-          </div>
+        <div className="col my-5">
+          <UserReviews reviews={product?.ratings} />
         </div>
+      </div>
       <div className="row">
         <div className="col my-5">
           <p className="lead">Related products</p>
